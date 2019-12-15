@@ -23,10 +23,6 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
-// your first API endpoint... 
-app.get("/api/hello", function (req, res) {
-  res.json({greeting: 'hello API'});
-});
 
 // Handle requests to the API
 app.get('/api/timestamp/:date_string?', (req, res) => {
@@ -47,7 +43,8 @@ app.get('/api/timestamp/:date_string?', (req, res) => {
         dateFormatObject    = {"unix": dateValue.getTime(), "utc": dateValue.toUTCString()};
     }
     else {
-        dateFormatObject = {"unix": null, "utc": "Invalid Date" };
+        //dateFormatObject = {"unix": null, "utc": "Invalid Date" };
+      dateFormatObject = {"error" : "Invalid Date" };
     }
     
     res.json(dateFormatObject);
@@ -56,7 +53,7 @@ app.get('/api/timestamp/:date_string?', (req, res) => {
 // Handle requests to a resource that doesn't exist (is not implemented)
 app.use((req, res, next) => {
     res.status(404).send("Sorry can't find that!");
-  });
+});
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {
